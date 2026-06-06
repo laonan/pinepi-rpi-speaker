@@ -88,7 +88,8 @@ Each entry in `birthdays.json` supports:
 | Backend | Key | Status |
 |---|---|---|
 | Piper (local) | `piper` | Implemented |
-| Volcano Engine | `volcano` | Interface ready, implementation deferred |
+| Azure (Neural TTS) | `azure` | Interface ready, implementation deferred |
+| Google Cloud | `google` | Interface ready, implementation deferred |
 | Alibaba Cloud | `aliyun` | Interface ready, implementation deferred |
 
 Per-message override: add `"tts_type": "volcano"` to a message object.  
