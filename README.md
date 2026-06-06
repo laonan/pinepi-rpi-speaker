@@ -107,6 +107,8 @@ Fallback chain: **message `tts_type`** → **global `tts_backend`** → **piper*
 │   └── remind.py
 ├── birthday/             # Optional birthday reminder script
 │   └── check_birthday.py
+├── skills/               # Hermes Agent skills (Skills Hub compatible)
+│   └── sendvoice/
 ├── piper/                # Piper binary + models + say.sh
 ├── data/                 # Runtime data (preserved on reinstall)
 │   ├── messages.json
@@ -117,6 +119,64 @@ Fallback chain: **message `tts_type`** → **global `tts_backend`** → **piper*
 /etc/pinepi-speaker/
 └── config.json           # Operator config
 ```
+
+## Agent Skill
+
+> ⚠️ **Experimental.** Tested on [Hermes Agent](https://hermes-agent.nousresearch.com) only. May also work on OpenClaw and other Skills Hub-compatible agents, but this has not been verified.
+
+The `skills/sendvoice/` directory contains a Hermes Agent skill that lets an AI agent push voice notifications to the speaker over the WebSocket API.
+
+### Install via Hermes Skills Hub
+
+**Add this repo as a tap** (subscribe to all skills):
+```bash
+hermes skills tap add laonan/pinepi-rpi-speaker
+hermes skills install laonan/pinepi-rpi-speaker/sendvoice
+```
+
+**Or install directly** (single skill, no tap needed):
+```bash
+hermes skills install laonan/pinepi-rpi-speaker/skills/sendvoice
+```
+
+**Or ask the agent in chat:**
+> "install the sendvoice skill from laonan/pinepi-rpi-speaker"
+
+### Setup
+
+Set the required environment variables (in `~/.bashrc` or the Hermes systemd service):
+
+```bash
+export SENDVOICE_BEARER_TOKEN="your-api-token"
+export SENDVOICE_API_URL="https://your-server/api/send"  # optional, has default
+export SENDVOICE_TARGET="speaker"                        # optional, default: speaker
+```
+
+### Usage
+
+**From a Hermes cron job or agent prompt** (recommended — inherits env vars):
+
+```bash
+/opt/hermes/.venv/bin/python3 /opt/data/skills/sendvoice/__init__.py '纯中文播报内容' 0
+# arg 2: 0 = queue (wait for keypress), 1 = play immediately
+```
+
+**From Python:**
+
+```python
+import importlib.util, sys
+spec = importlib.util.spec_from_file_location("sendvoice", "/opt/data/skills/sendvoice/__init__.py")
+sendvoice = importlib.util.module_from_spec(spec)
+sys.modules["sendvoice"] = sendvoice
+spec.loader.exec_module(sendvoice)
+
+sendvoice.send_voice("纯中文内容")
+sendvoice.send_voice("紧急通知！马上回电话", play_now=1)
+```
+
+> ⚠️ **All content must be pure Chinese.** The Piper TTS engine will spell out English letter-by-letter. Translate any English text to Chinese before calling `send_voice()`.
+
+See `agent-skills/hermes/sendvoice/SKILL.md` for full documentation including cron job integration and Docker environment variable handling.
 
 ## License
 
