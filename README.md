@@ -1,6 +1,6 @@
 # pinepi-speaker
 
-Raspberry Pi smart speaker — one-click installable Python package.
+A self-hosted smart speaker for Raspberry Pi. Receives push notifications from a WebSocket server, speaks them aloud via local Piper TTS, and supports USB keyboard control, scheduled voice reminders, and birthday announcements — all configurable through a single JSON file with no cloud dependency required.
 
 ## Features
 
@@ -13,7 +13,9 @@ Raspberry Pi smart speaker — one-click installable Python package.
 ## Quick Install
 
 ```bash
-sudo ./install.sh
+git clone https://github.com/laonan/pinepi-rpi-speaker.git
+cd pinepi-rpi-speaker
+sudo bash install.sh
 ```
 
 Then edit `/etc/pinepi-speaker/config.json`:
