@@ -1,0 +1,30 @@
+[
+  {
+    "name": "妈妈",
+    "type": "lunar",
+    "month": 1,
+    "day": 1,
+    "msg": "妈妈生日快乐"
+  },
+  {
+    "name": "爸爸",
+    "type": "lunar",
+    "month": 1,
+    "day": 1,
+    "msg": "爸爸生日快乐"
+  },
+  {
+    "name": "Sister",
+    "type": "solar",
+    "month": 1,
+    "day": 1,
+    "msg": "Happy birthday to sister!"
+  },
+  {
+    "name": "Brother",
+    "type": "solar",
+    "month": 1,
+    "day": 1,
+    "msg": "Happy birthday to brother!"
+  }
+]

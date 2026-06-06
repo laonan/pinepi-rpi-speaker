@@ -1,0 +1,20 @@
+[Unit]
+Description=PinePi Speaker — USB Keyboard Listener
+After=local-fs.target sound.target
+Wants=sound.target
+
+[Service]
+Type=notify
+ExecStart=/opt/pinepi-speaker/venv/bin/python -m pinepi_speaker.keyboard_listener
+WorkingDirectory=/opt/pinepi-speaker
+Restart=always
+RestartSec=5
+User=root
+Group=root
+WatchdogSec=30
+NotifyAccess=all
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,18 @@
+[Unit]
+Description=PinePi Speaker — WebSocket Client
+After=network-online.target sound.target
+Wants=network-online.target sound.target
+
+[Service]
+Type=simple
+ExecStart=/opt/pinepi-speaker/venv/bin/python -m pinepi_speaker.ws_client
+WorkingDirectory=/opt/pinepi-speaker
+Restart=always
+RestartSec=5
+User=root
+Group=root
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
